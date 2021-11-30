@@ -45,8 +45,8 @@ android {
 dependencies {
     compileOnly "androidx.compose.ui:ui:$compose_version"
     compileOnly "androidx.compose.material:material:$compose_version"
-    compileOnly "androidx.compose.ui:ui-tooling-preview:$compose_version"
-    debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
+    //compileOnly "androidx.compose.ui:ui-tooling-preview:$compose_version"
+   /// debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
 
     compileOnly "androidx.recyclerview:recyclerview:1.2.1"
 }
