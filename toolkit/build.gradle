@@ -59,7 +59,7 @@ afterEvaluate {
                 from components.release
 
                 // You can then customize attributes of the publication as shown below.
-                groupId = 'com.github.prime-zs'
+                groupId = 'com.prime.companion'
                 artifactId = 'toolkit'
                 version = '1.0.1'
             }
