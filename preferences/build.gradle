@@ -42,7 +42,7 @@ android {
 dependencies {
     //preferences data store.
     implementation 'androidx.datastore:datastore-preferences:1.0.0'
-    compileOnly "androidx.compose.runtime:runtime:1.1.0-beta03"
+    compileOnly "androidx.compose.runtime:runtime:$compose_version"
 }
 
 // Because the components are created only during the afterEvaluate phase, you must

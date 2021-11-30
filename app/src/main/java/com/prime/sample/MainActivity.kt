@@ -10,6 +10,8 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.prime.sample.ui.theme.CompanionTheme
+import com.primex.extra.Frame
+import com.primex.extra.Label
 import com.primex.preferences.Preferences
 import com.primex.preferences.stringPreferenceKey
 import com.primex.toolkit.Toolkit
@@ -27,6 +29,12 @@ class MainActivity : ComponentActivity() {
                     Greeting("Android")
 
                     val preferences = Preferences.get(this)
+
+
+                    com.primex.extra.Frame {
+                        Label(text = "jjkjkj")
+                    }
+
 
                 val x =    with(preferences){get(stringPreferenceKey("hjh")).observeAsState()}
 
