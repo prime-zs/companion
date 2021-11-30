@@ -10,6 +10,8 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.prime.sample.ui.theme.CompanionTheme
+import com.primex.preferences.Preferences
+import com.primex.preferences.stringPreferenceKey
 import com.primex.toolkit.Toolkit
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -23,6 +25,10 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
                     Greeting("Android")
+
+                    val preferences = Preferences.get(this)
+
+                val x =    with(preferences){get(stringPreferenceKey("hjh")).observeAsState()}
 
                     GlobalScope.launch {
                         val amplitude = Toolkit

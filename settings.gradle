@@ -11,3 +11,4 @@ rootProject.name = "Companion"
 include ':app'
 include ':toolkit'
 include ':preferences'
+include ':extra'
