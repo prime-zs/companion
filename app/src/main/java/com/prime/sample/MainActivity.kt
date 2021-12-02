@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
                     val preferences = Preferences.get(this)
 
 
-                    com.primex.extra.Frame {
+                    Frame {
                         Label(text = "jjkjkj")
                     }
 
