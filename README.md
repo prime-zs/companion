@@ -1,4 +1,5 @@
-# companion
+## Companion
+# A set of helper libraries for android Jitpack Compose.
 
 [![](https://jitpack.io/v/prime-zs/companion.svg)](https://jitpack.io/#prime-zs/companion)
 
