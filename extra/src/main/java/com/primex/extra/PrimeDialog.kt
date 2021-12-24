@@ -69,7 +69,7 @@ fun BaseDialog(
                             Icon(
                                 imageVector = it,
                                 contentDescription = "dialog icon",
-                                modifier = Modifier.padding(start = Padding.MEDIUM)
+                                modifier = Modifier.padding(start = Dp.PaddingNormal)
                             )
                         }
                     },
@@ -84,9 +84,9 @@ fun BaseDialog(
                     Row(
                         modifier = Modifier
                             .padding(
-                                bottom = Padding.MEDIUM,
-                                end = Padding.MEDIUM,
-                                start = Padding.MEDIUM
+                                bottom = Dp.PaddingNormal,
+                                end = Dp.PaddingNormal,
+                                start = Dp.PaddingNormal
                             )
                             .fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceEvenly,
@@ -185,7 +185,7 @@ fun AlertDialog(
         onDismissRequest = { onDismissRequest(false) },
         button2 = "Confirm" to { onDismissRequest(true) },
         button1 = "Dismiss" to { onDismissRequest(false) }) {
-        Frame(modifier = Modifier.padding(horizontal = Padding.LARGE, vertical = Padding.MEDIUM)) {
+        Frame(modifier = Modifier.padding(horizontal = Dp.PaddingLarge, vertical = Dp.PaddingNormal)) {
             Text(text = message, overflow = TextOverflow.Ellipsis)
         }
     }
@@ -232,8 +232,8 @@ fun TextInputDialog(
             modifier = Modifier
                 .focusRequester(focusRequester = focusRequester)
                 .padding(
-                    vertical = Padding.EXTRA_LARGE,
-                    horizontal = Padding.LARGE
+                    vertical = Dp.PaddingLarge2,
+                    horizontal = Dp.PaddingLarge2
                 )
                 .fillMaxWidth(),
             trailingIcon = {

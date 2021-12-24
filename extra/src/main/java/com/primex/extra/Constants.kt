@@ -1,54 +1,71 @@
 package com.primex.extra
 
+import androidx.compose.animation.core.AnimationConstants
+import androidx.compose.material.ContentAlpha
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 
-object Anim {
-    /**A Duration of 250 mills*/
-    const val DURATION_SHORT = 250
+private val PaddingSmall = 4.dp
+private val PaddingMedium = 8.dp
+private val PaddingLarge = 16.dp
+private val PaddingExtraLarge = 32.dp
 
-    /**A Duration of 500 mills*/
-    const val DURATION_MEDIUM = 500
-
-    /**A Duration of 750 mills*/
-    const val DURATION_LONG = 750
-}
-
-object Padding {
-    /**A padding of 4 dp*/
-    val SMALL = 4.dp
-
-    /**A padding of 8 dp*/
-    val MEDIUM = 8.dp
-
-    /**A padding of 16 dp*/
-    val LARGE = 16.dp
-
-    /**A padding of 32 dp*/
-    val EXTRA_LARGE = 32.dp
-}
+val Dp.Companion.PaddingSmall get() = com.primex.extra.PaddingSmall
+val Dp.Companion.PaddingNormal get() = PaddingMedium
+val Dp.Companion.PaddingLarge get() = com.primex.extra.PaddingLarge
+val Dp.Companion.PaddingLarge2 get() = PaddingExtraLarge
 
 
-object Elevation {
-    /**An Elevation of 0 dp*/
-    val NONE = 0.dp
+const val AnimDurationShort = 250
+const val AnimDurationMedium = 500
+const val AnimDurationLong = 750
 
-    /**An Elevation of 6 dp*/
-    val LOW = 6.dp
+typealias Anim = AnimationConstants
 
-    /**An Elevation of 12 dp*/
-    val MEDIUM = 12.dp
+/**A Duration of 250 mills*/
+val Anim.durationShort get() = AnimDurationShort
 
-    /**An Elevation of 20 dp*/
-    val HIGH = 20.dp
+/**A Duration of 500 mills*/
+val Anim.durationMedium get() = AnimDurationMedium
 
-    /**An Elevation of 30 dp*/
-    val EXTRA_HIGH = 30.dp
-}
+/**A Duration of 750 mills*/
+val Anim.durationLong get() = AnimDurationLong
 
-object Alpha {
-    const val Divider = 0.12f
+private val elevationNone = 0.dp
+private val elevationLow = 6.dp
+private val elevationMedium = 12.dp
+private val elevationHigh = 20.dp
+private val elevationExtraHigh = 30.dp
 
-    const val Indication = 0.1f
-}
+/**An Elevation of 0 dp*/
+val Dp.Companion.eNone: Dp get() = com.primex.extra.elevationNone
+
+/**An Elevation of 6 dp*/
+val Dp.Companion.eLow: Dp get() = com.primex.extra.elevationLow
+
+/**An Elevation of 12 dp*/
+val Dp.Companion.eMedium: Dp get() = com.primex.extra.elevationMedium
+
+/**An Elevation of 20 dp*/
+val Dp.Companion.eHigh: Dp get() = com.primex.extra.elevationHigh
+
+/**An Elevation of 30 dp*/
+val Dp.Companion.eExtraHigh: Dp get() = com.primex.extra.elevationExtraHigh
+
+private const val Divider = 0.12f
+
+/**
+ * The recommended divider Alpha
+ */
+val ContentAlpha.Divider get() = com.primex.extra.Divider
+
+private const val Indication = 0.1f
+
+/**
+ * The recommended LocalIndication Alpha
+ */
+val ContentAlpha.Indication get() = com.primex.extra.Indication
+
+
 

@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 private val DropdownMenuItemDefaultMinWidth = 175.dp
@@ -70,7 +71,7 @@ fun DropdownMenu(
             DropdownMenuItem(onClick = { /*Do Nothing*/ }, enabled = false) {
                 Label(
                     text = it,
-                    modifier = Modifier.padding(Padding.MEDIUM),
+                    modifier = Modifier.padding(Dp.PaddingNormal),
                     fontWeight = FontWeight.Bold,
                 )
             }
@@ -108,7 +109,7 @@ fun DropdownMenu(
                         imageVector = it,
                         contentDescription = null,
                         tint = color,
-                        modifier = Modifier.padding(start = Padding.LARGE)
+                        modifier = Modifier.padding(start = Dp.PaddingLarge)
                     )
                 }
 
@@ -122,7 +123,7 @@ fun DropdownMenu(
                             else
                                 Modifier
                         }
-                        .padding(horizontal = Padding.LARGE)
+                        .padding(horizontal = Dp.PaddingLarge)
 
                         .weight(1f),
                     fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Medium,

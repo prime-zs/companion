@@ -1,38 +1,26 @@
 package com.primex.extra
 
+import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import com.primex.extra.Result.State
 import kotlinx.coroutines.flow.*
+import kotlin.reflect.KProperty
 import androidx.compose.runtime.State as AndroidState
 
+private const val TAG = "Result"
 
-/**
- * A utility class that holds the **UiState**.
- *
- * * Since this will only be used UI hence the [AndroidState] observable.
- * * Use [invoke] to emit new values. When emitting data the invoke automatically changes [State] to success.
- * * use destructuring to de-structure [Result] into corresponding [State] and [data]
- */
-class Result<T>(initial: T) {
+interface Result<T> {
+
     /* The data of this class*/
-    val data: AndroidState<T> = mutableStateOf(initial)
+    val data: AndroidState<T>
+
     /*The state of the housed data*/
-    val state: AndroidState<State> = mutableStateOf(State.Loading)
+    val state: AndroidState<State>
 
     operator fun component2(): T = data.value
 
     operator fun component1(): State = state.value
-
-    operator fun invoke(value: T) {
-        (data as MutableState).value = value
-        // automatically change state to success
-        invoke(State.Success)
-    }
-
-    operator fun invoke(value: State) {
-        (state as MutableState).value = value
-    }
 
     /**
      * The [State] of the [IResult] class.
@@ -54,4 +42,30 @@ class Result<T>(initial: T) {
 
         object Success : State()
     }
+}
+
+
+class MutableResult<T>(initial: T) : Result<T> {
+
+    override val data: AndroidState<T> = mutableStateOf(initial)
+
+    override val state: AndroidState<State> = mutableStateOf(State.Loading)
+
+    fun emit(value: T) {
+        (this.data as MutableState).value = value
+        (this.state as MutableState).value = State.Success
+    }
+
+    fun emit(value: State) {
+        require(value != State.Success) {
+            Log.e("Result", "success will be invoked when value is emitted.")
+        }
+        (this.state as MutableState).value = value
+    }
+}
+
+inline fun <T> mutableResultOf(initial: T, init: (result: MutableResult<T>) -> Unit): Result<T> {
+    val result = MutableResult(initial)
+    init.invoke(result)
+    return result
 }

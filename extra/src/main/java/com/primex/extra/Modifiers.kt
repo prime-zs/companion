@@ -171,7 +171,7 @@ fun Modifier.verticalFadingEdge(
     state: ScrollableState,
     color: Color? = null,
     length: Dp = DEFAULT_FADING_EDGE_LENGTH,
-)= fadeEdge(state = state, horizontal = false, color = color, length = length)
+) = fadeEdge(state = state, horizontal = false, color = color, length = length)
 
 
 /**
@@ -181,13 +181,13 @@ fun Modifier.horizontalFadingEdge(
     state: ScrollableState,
     color: Color? = null,
     length: Dp = DEFAULT_FADING_EDGE_LENGTH,
-)= fadeEdge(state = state, horizontal = true, color = color, length = length)
+) = fadeEdge(state = state, horizontal = true, color = color, length = length)
 
 /**
  * An shortcut for implementing [animateContentSize] with [tween]
  *  @param durationMillis duration of the animation spec
  */
-fun Modifier.animate(durationMillis: Int = Anim.DURATION_MEDIUM) =
+fun Modifier.animate(durationMillis: Int = Anim.durationMedium) =
     animateContentSize(animationSpec = tween(durationMillis))
 
 private fun Modifier.gradient(

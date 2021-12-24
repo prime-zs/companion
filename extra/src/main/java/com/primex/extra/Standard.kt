@@ -18,7 +18,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.AnnotatedString
@@ -28,10 +30,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.IntOffset
-import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.*
 
 private const val TAG = "Standard"
 
@@ -314,12 +313,12 @@ fun ProgressButton(
 ) {
     val new by animateColorAsState(
         targetValue = color,
-        animationSpec = tween(Anim.DURATION_MEDIUM)
+        animationSpec = tween(Anim.durationMedium)
     )
 
     val progressT by animateFloatAsState(
         targetValue = progress,
-        animationSpec = tween(Anim.DURATION_MEDIUM)
+        animationSpec = tween(Anim.durationMedium)
     )
 
     TextButton(
@@ -347,40 +346,77 @@ fun ProgressButton(
     }
 }
 
+
+/**
+ * A representation of ListTile for [LazyColumn]s etc.
+ *
+ *  The [ListTile] constitutes of [secondaryText], [text], [trailing], [icon] and [overlineText]. It has
+ *  width of fillWidth and height of [WrapContent].
+ *
+ *
+ * @param modifier Control size, clickable, etc using [modifier]
+ * @param selected: if selected a background of color [LocalContentColor] with alpha [ContentAlpha.Indication] is added.
+ * @param enabled: changes tyle colors etc. of components.
+ *
+ * @author Zakir Ahmad Sheikh
+ * @see GridTile
+ */
 @Composable
-fun ListItem(
+fun ListTile(
     modifier: Modifier = Modifier,
-    icon: @Composable (() -> Unit)? = null,
+    selected: Boolean = false,
+    enabled: Boolean = true,
     secondaryText: @Composable (() -> Unit)? = null,
     overlineText: @Composable (() -> Unit)? = null,
     trailing: @Composable (() -> Unit)? = null,
-    text: @Composable () -> Unit
+    text: @Composable (() -> Unit),
+    icon: @Composable (() -> Unit)?,
 ) {
     val typography = MaterialTheme.typography
 
     val styledText = applyTextStyle(
         typography.subtitle1,
-        ContentAlpha.high,
+        if (enabled) ContentAlpha.high else ContentAlpha.disabled,
         text
     )!!
+
     val styledSecondaryText = applyTextStyle(
         typography.body2,
-        ContentAlpha.medium,
+        if (enabled) ContentAlpha.medium else ContentAlpha.disabled,
         secondaryText
     )
+
     val styledOverlineText = applyTextStyle(
         typography.overline,
-        ContentAlpha.high,
+        if (enabled) ContentAlpha.high else ContentAlpha.disabled,
         overlineText
     )
-    val styledTrailing = applyTextStyle(typography.caption, ContentAlpha.high, trailing)
 
+    val styledTrailing = applyTextStyle(
+        typography.caption,
+        if (enabled) ContentAlpha.high else ContentAlpha.disabled,
+        trailing
+    )
 
-    Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
+    val bg by animateColorAsState(
+        targetValue = if (selected) LocalContentColor.current.copy(
+            ContentAlpha.Indication
+        ) else Color.Transparent
+    )
+
+    Row(
+        modifier = Modifier
+            .background(color = bg)
+            .then(
+                modifier
+                    .padding(vertical = Dp.PaddingNormal)
+            ),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
         icon?.invoke()
         Column(
             modifier = Modifier
-                .padding(horizontal = Padding.MEDIUM)
+                .padding(horizontal = Dp.PaddingNormal)
                 .weight(1f), verticalArrangement = Arrangement.Center
         ) {
             styledOverlineText?.invoke()
@@ -390,6 +426,7 @@ fun ListItem(
         styledTrailing?.invoke()
     }
 }
+
 
 private fun applyTextStyle(
     textStyle: TextStyle,
@@ -431,7 +468,7 @@ fun Header(
     }
 
     Surface(modifier = modifier, color = backgroundColor, elevation = 0.dp) {
-        ListItem(
+        ListTile(
             icon = leading,
             text = {
                 Crossfade(targetState = text) {
@@ -676,6 +713,89 @@ fun TextInputField(
         shape = shape,
         colors = colors
     )
+}
+
+
+
+/**
+ * Representation of Grid Item.
+ *
+ * @author Zakir Ahmad Sheikh
+ *
+ * **Follow Instructions**
+ *
+ * @param modifier Control size, clickable, etc using [modifier]
+ * @param selected: if selected a background of color [LocalContentColor] with alpha [ContentAlpha.Indication] is added.
+ * @param enabled: changes tyle colors etc. of components.
+ *
+ */
+@Composable
+fun GridTile(
+    modifier: Modifier = Modifier,
+    text: @Composable (() -> Unit)? = null,
+    secondaryText: @Composable (() -> Unit)? = null,
+    selected: Boolean = false,
+    enabled: Boolean = true,
+    padding: PaddingValues = PaddingValues(horizontal = 2.dp, vertical = Dp.PaddingSmall),
+    shape: Shape = RectangleShape,
+    border: BorderStroke? = null,
+    elevation: Dp = 0.dp,
+    color: Color = Color.Transparent,
+    child: @Composable () -> Unit,
+) {
+
+    val typography = MaterialTheme.typography
+
+    val styledText = applyTextStyle(
+        typography.subtitle1.copy(
+            fontSize = 11.sp,
+            fontWeight = FontWeight.SemiBold,
+        ), if (enabled) ContentAlpha.high else ContentAlpha.disabled, text
+    )
+    val styledSecondaryText = applyTextStyle(
+        typography.caption,
+        if (enabled) ContentAlpha.medium else ContentAlpha.disabled,
+        secondaryText
+    )
+
+    val bg by animateColorAsState(
+        targetValue = if (selected) LocalContentColor.current.copy(
+            ContentAlpha.Indication
+        ) else Color.Transparent
+    )
+
+    val styledChild = applyTextStyle(
+        typography.caption,
+        if (enabled) ContentAlpha.medium else ContentAlpha.disabled,
+        child
+    )!!
+
+    Frame(
+        modifier = modifier,
+        color = bg.compositeOver(color),
+        shape = shape,
+        elevation = elevation,
+        border = border,
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(padding),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            // stacked over one another.
+            styledChild()
+
+            //
+            if (styledText != null) {
+                Spacer(modifier = Modifier.padding(top = Dp.PaddingNormal))
+                styledText()
+            }
+
+            if (styledSecondaryText != null) {
+                styledSecondaryText()
+            }
+        }
+    }
 }
 
 
