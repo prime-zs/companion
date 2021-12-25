@@ -71,7 +71,7 @@ fun DropdownMenu(
             DropdownMenuItem(onClick = { /*Do Nothing*/ }, enabled = false) {
                 Label(
                     text = it,
-                    modifier = Modifier.padding(Dp.PaddingNormal),
+                    modifier = Modifier.padding(Dp.pNormal),
                     fontWeight = FontWeight.Bold,
                 )
             }
@@ -109,7 +109,7 @@ fun DropdownMenu(
                         imageVector = it,
                         contentDescription = null,
                         tint = color,
-                        modifier = Modifier.padding(start = Dp.PaddingLarge)
+                        modifier = Modifier.padding(start = Dp.pLarge)
                     )
                 }
 
@@ -123,7 +123,7 @@ fun DropdownMenu(
                             else
                                 Modifier
                         }
-                        .padding(horizontal = Dp.PaddingLarge)
+                        .padding(horizontal = Dp.pLarge)
 
                         .weight(1f),
                     fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Medium,

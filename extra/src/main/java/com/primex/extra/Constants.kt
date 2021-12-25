@@ -11,10 +11,17 @@ private val PaddingMedium = 8.dp
 private val PaddingLarge = 16.dp
 private val PaddingExtraLarge = 32.dp
 
-val Dp.Companion.PaddingSmall get() = com.primex.extra.PaddingSmall
-val Dp.Companion.PaddingNormal get() = PaddingMedium
-val Dp.Companion.PaddingLarge get() = com.primex.extra.PaddingLarge
-val Dp.Companion.PaddingLarge2 get() = PaddingExtraLarge
+/** A Padding of 4.dp */
+val Dp.Companion.pSmall get() = com.primex.extra.PaddingSmall
+
+/** A Padding of 8.dp */
+val Dp.Companion.pNormal get() = PaddingMedium
+
+/** A Padding of 16.dp */
+val Dp.Companion.pLarge get() = com.primex.extra.PaddingLarge
+
+/** A Padding of 32.dp */
+val Dp.Companion.pLarge2 get() = PaddingExtraLarge
 
 
 const val AnimDurationShort = 250
@@ -66,6 +73,3 @@ private const val Indication = 0.1f
  * The recommended LocalIndication Alpha
  */
 val ContentAlpha.Indication get() = com.primex.extra.Indication
-
-
-

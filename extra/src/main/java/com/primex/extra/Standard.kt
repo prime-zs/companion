@@ -409,14 +409,14 @@ fun ListTile(
             .background(color = bg)
             .then(
                 modifier
-                    .padding(vertical = Dp.PaddingNormal)
+                    .padding(vertical = Dp.pNormal)
             ),
         verticalAlignment = Alignment.CenterVertically
     ) {
         icon?.invoke()
         Column(
             modifier = Modifier
-                .padding(horizontal = Dp.PaddingNormal)
+                .padding(horizontal = Dp.pNormal)
                 .weight(1f), verticalArrangement = Arrangement.Center
         ) {
             styledOverlineText?.invoke()
@@ -736,7 +736,7 @@ fun GridTile(
     secondaryText: @Composable (() -> Unit)? = null,
     selected: Boolean = false,
     enabled: Boolean = true,
-    padding: PaddingValues = PaddingValues(horizontal = 2.dp, vertical = Dp.PaddingSmall),
+    padding: PaddingValues = PaddingValues(horizontal = 2.dp, vertical = Dp.pSmall),
     shape: Shape = RectangleShape,
     border: BorderStroke? = null,
     elevation: Dp = 0.dp,
@@ -787,7 +787,7 @@ fun GridTile(
 
             //
             if (styledText != null) {
-                Spacer(modifier = Modifier.padding(top = Dp.PaddingNormal))
+                Spacer(modifier = Modifier.padding(top = Dp.pNormal))
                 styledText()
             }
 

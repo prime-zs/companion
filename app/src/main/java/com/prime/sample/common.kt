@@ -145,14 +145,14 @@ fun ListTile(
             .background(color = bg)
             .then(
                 modifier
-                    .padding(vertical = Dp.PaddingNormal)
+                    .padding(vertical = Dp.pNormal)
             ),
         verticalAlignment = Alignment.CenterVertically
     ) {
         icon?.invoke()
         Column(
             modifier = Modifier
-                .padding(horizontal = Dp.PaddingNormal)
+                .padding(horizontal = Dp.pNormal)
                 .weight(1f), verticalArrangement = Arrangement.Center
         ) {
             styledOverlineText?.invoke()
@@ -194,7 +194,7 @@ fun Genre(
             .then(modifier),
         selected = selected,
         enabled = false,
-        padding = PaddingValues(Dp.PaddingNormal),
+        padding = PaddingValues(Dp.pNormal),
         text = { Label(text = name, maxLines = 2, textAlign = TextAlign.Center) },
         secondaryText = { Label(text = subtitle, textAlign = TextAlign.Center) }
     ) {
@@ -203,7 +203,7 @@ fun Genre(
             color = Color.Transparent,
             shape = CircleShape,
             modifier = Modifier
-                .padding(top = Dp.PaddingNormal)
+                .padding(top = Dp.pNormal)
                 .size(60.dp),
             border = BorderStroke(3.dp, LocalContentColor.current.copy(LocalContentAlpha.current)),
         ) {

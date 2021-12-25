@@ -69,7 +69,7 @@ fun BaseDialog(
                             Icon(
                                 imageVector = it,
                                 contentDescription = "dialog icon",
-                                modifier = Modifier.padding(start = Dp.PaddingNormal)
+                                modifier = Modifier.padding(start = Dp.pNormal)
                             )
                         }
                     },
@@ -84,9 +84,9 @@ fun BaseDialog(
                     Row(
                         modifier = Modifier
                             .padding(
-                                bottom = Dp.PaddingNormal,
-                                end = Dp.PaddingNormal,
-                                start = Dp.PaddingNormal
+                                bottom = Dp.pNormal,
+                                end = Dp.pNormal,
+                                start = Dp.pNormal
                             )
                             .fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceEvenly,
@@ -185,7 +185,7 @@ fun AlertDialog(
         onDismissRequest = { onDismissRequest(false) },
         button2 = "Confirm" to { onDismissRequest(true) },
         button1 = "Dismiss" to { onDismissRequest(false) }) {
-        Frame(modifier = Modifier.padding(horizontal = Dp.PaddingLarge, vertical = Dp.PaddingNormal)) {
+        Frame(modifier = Modifier.padding(horizontal = Dp.pLarge, vertical = Dp.pNormal)) {
             Text(text = message, overflow = TextOverflow.Ellipsis)
         }
     }
@@ -232,8 +232,8 @@ fun TextInputDialog(
             modifier = Modifier
                 .focusRequester(focusRequester = focusRequester)
                 .padding(
-                    vertical = Dp.PaddingLarge2,
-                    horizontal = Dp.PaddingLarge2
+                    vertical = Dp.pLarge2,
+                    horizontal = Dp.pLarge2
                 )
                 .fillMaxWidth(),
             trailingIcon = {
@@ -252,7 +252,7 @@ fun TextInputDialog(
     }
 }
 
-
+@Immutable
 @JvmInline
 value class Window(private val state: State<Boolean>) {
     fun show() {
