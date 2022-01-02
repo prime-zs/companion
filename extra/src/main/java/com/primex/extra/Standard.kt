@@ -10,13 +10,20 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.shape.ZeroCornerSize
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
@@ -31,6 +38,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.*
+import kotlinx.coroutines.delay
 
 private const val TAG = "Standard"
 
@@ -563,7 +571,7 @@ fun TextInputField(
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions(),
-    interactionSource: MutableInteractionSource = androidx.compose.runtime.remember { MutableInteractionSource() },
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     shape: Shape =
         MaterialTheme.shapes.small.copy(bottomEnd = ZeroCornerSize, bottomStart = ZeroCornerSize),
     colors: TextFieldColors = if (simple)
@@ -622,7 +630,8 @@ fun TextInputField(
                     keyboardActions = keyboardActions,
                     interactionSource = interactionSource,
                     colors = colors,
-                    leadingIcon = if (leadingIcon == null) null else leader
+                    leadingIcon = if (leadingIcon == null) null else leader,
+                    modifier = Modifier.fillMaxWidth()
                 )
             }
             else -> {
@@ -644,6 +653,7 @@ fun TextInputField(
                     keyboardActions = keyboardActions,
                     interactionSource = interactionSource,
                     colors = colors,
+                    modifier = Modifier.fillMaxWidth()
                 )
             }
         }
@@ -673,12 +683,12 @@ fun TextInputField(
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions(),
-    interactionSource: MutableInteractionSource = androidx.compose.runtime.remember { MutableInteractionSource() },
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     shape: Shape =
         MaterialTheme.shapes.small.copy(bottomEnd = ZeroCornerSize, bottomStart = ZeroCornerSize),
     colors: TextFieldColors = if (simple) TextFieldDefaults.textFieldColors() else TextFieldDefaults.outlinedTextFieldColors()
 ) {
-    var textFieldValueState by androidx.compose.runtime.remember {
+    var textFieldValueState by remember {
         mutableStateOf(
             TextFieldValue(
                 text = value
@@ -800,3 +810,54 @@ fun GridTile(
 
 
 
+/**
+ * A widget that provides a user interface for the user to enter a search query and submit a request
+ * to a search provider. Shows a list of query suggestions or results, if available, and allows the
+ * user to pick a suggestion or result to launch into.
+ */
+@Composable
+fun Search(
+    modifier: Modifier = Modifier,
+    onRequestClose: (() -> Unit)? = null,
+    shape: Shape = RoundedCornerShape(50),
+    elevation: Dp = 4.dp,
+    color: Color = MaterialTheme.colors.surface,
+    placeholder: String? = null,
+    query: String,
+    onQueryChanged: (query: String) -> Unit,
+) {
+    Frame(
+        shape = shape,
+        modifier = Modifier
+            .scale(0.85f)
+            .then(modifier),
+        elevation = elevation,
+        color = color,
+    ) {
+        val focusRequester = remember { FocusRequester() }
+
+        TextInputField(
+            value = query,
+            onValueChange = onQueryChanged,
+            modifier = Modifier
+                .focusRequester(focusRequester)
+                .fillMaxWidth()
+                .height(56.dp),
+            placeholder = placeholder,
+            /*  colors = TextFieldDefaults.textFieldColors(
+                  backgroundColor = Color.Transparent
+              ),*/
+            leadingIcon = Icons.Default.Search,
+            trailingIcon = {
+                IconButton(onClick = { onRequestClose?.invoke() }) {
+                    Icon(imageVector = Icons.Default.Close, contentDescription = null)
+                }
+            },
+        )
+
+        DisposableEffect(key1 = Unit){
+            focusRequester.requestFocus()
+            onDispose {  }
+        }
+    }
+}

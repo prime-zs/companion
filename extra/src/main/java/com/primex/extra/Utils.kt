@@ -9,6 +9,11 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 
 /**
+ * A short-cut name for [MaterialTheme]
+ */
+typealias Material = MaterialTheme
+
+/**
  * A function meant to accompany composable without triggering whole composable recomposition
  */
 @SuppressLint("ComposableNaming")
@@ -18,9 +23,9 @@ fun calculate(calculation: () -> Unit) {
     calculation.invoke()
 }
 
-@ReadOnlyComposable
-@Composable
-fun isLight(): Boolean = MaterialTheme.colors.isLight
+val Material.isLight
+    @Composable
+    get() = colors.isLight
 
 /**
  * The Height of the mobile display device

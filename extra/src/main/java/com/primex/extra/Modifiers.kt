@@ -52,7 +52,7 @@ fun Modifier.fadeEdge(
         value = length
     },
 ) {
-    val color = color ?: (if (isLight()) Color.White else Color.Black)
+    val color = color ?: (if (Material.isLight) Color.White else Color.Black)
     Modifier.drawWithContent {
         // The length in pixels
         val lengthPx = length.toPx()

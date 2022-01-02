@@ -61,7 +61,7 @@ fun BaseDialog(
                             style = MaterialTheme.typography.body1,
                         )
                     },
-                    backgroundColor = topBarBackgroundColor.takeOrElse { if (isLight()) Color.SignalWhite else Color.JetBlack },
+                    backgroundColor = topBarBackgroundColor.takeOrElse { if (Material.isLight) Color.SignalWhite else Color.JetBlack },
                     contentColor = topBarContentColor,
                     elevation = topBarElevation,
                     navigationIcon = vectorIcon?.let {
@@ -245,9 +245,9 @@ fun TextInputDialog(
             }
         )
 
-        LaunchedEffect(key1 = "") {
-            delay(500)
+        DisposableEffect(key1 = Unit){
             focusRequester.requestFocus()
+            onDispose {  }
         }
     }
 }

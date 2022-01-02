@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import com.primex.extra.Result.State
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
 import kotlin.reflect.KProperty
 import androidx.compose.runtime.State as AndroidState
@@ -23,27 +24,28 @@ interface Result<T> {
     operator fun component1(): State = state.value
 
     /**
-     * The [State] of the [IResult] class.
+     * The [State] of the [Result] class.
      */
-    sealed class State {
-        object Loading : State()
+    sealed interface State {
+        object Loading : State
 
         /**
          * @param what pass different values for different states like Searching, Processing etc.
          */
-        data class Processing(val what: Int = -1) : State()
+        @JvmInline
+        value class Processing(val what: Int = -1) : State
 
         /**
          * @param what: can be anything like string message or some error code as per requirements of user
          */
-        data class Error(val what: String) : State()
+        @JvmInline
+        value class Error(val throwable: Throwable?) : State
 
-        object Empty : State()
+        object Empty : State
 
-        object Success : State()
+        object Success : State
     }
 }
-
 
 class MutableResult<T>(initial: T) : Result<T> {
 
@@ -64,8 +66,45 @@ class MutableResult<T>(initial: T) : Result<T> {
     }
 }
 
-inline fun <T> mutableResultOf(initial: T, init: (result: MutableResult<T>) -> Unit): Result<T> {
+
+inline fun <T> buildResult(initial: T, init: MutableResult<T>.() -> Unit): Result<T> {
     val result = MutableResult(initial)
     init.invoke(result)
     return result
+}
+
+fun <T> buildResultOfList(
+    initial: List<T>,
+    scope: CoroutineScope,
+    flow: Flow<List<T>>
+): Result<List<T>> {
+    return buildResult(initial) {
+        flow.onEach {
+            emit(it)
+            // change state to empty.
+            if (it.isEmpty()) {
+                emit(Result.State.Empty)
+            }
+        }
+            .catch { emit(Result.State.Error(it)) }
+            .launchIn(scope)
+    }
+}
+
+fun <K, T> buildResultOfMap(
+    initial: Map<K, T>,
+    scope: CoroutineScope,
+    flow: Flow<Map<K, T>>
+): Result<Map<K, T>> {
+    return buildResult(initial) {
+        flow.onEach {
+            emit(it)
+            // change state to empty.
+            if (it.isEmpty()) {
+                emit(Result.State.Empty)
+            }
+        }
+            .catch { emit(Result.State.Error(it)) }
+            .launchIn(scope)
+    }
 }
