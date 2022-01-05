@@ -38,7 +38,6 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.*
-import kotlinx.coroutines.delay
 
 private const val TAG = "Standard"
 
@@ -417,14 +416,14 @@ fun ListTile(
             .background(color = bg)
             .then(
                 modifier
-                    .padding(vertical = Dp.pNormal)
+                    .padding(vertical = Dp.pMedium)
             ),
         verticalAlignment = Alignment.CenterVertically
     ) {
         icon?.invoke()
         Column(
             modifier = Modifier
-                .padding(horizontal = Dp.pNormal)
+                .padding(horizontal = Dp.pMedium)
                 .weight(1f), verticalArrangement = Arrangement.Center
         ) {
             styledOverlineText?.invoke()
@@ -797,7 +796,7 @@ fun GridTile(
 
             //
             if (styledText != null) {
-                Spacer(modifier = Modifier.padding(top = Dp.pNormal))
+                Spacer(modifier = Modifier.padding(top = Dp.pMedium))
                 styledText()
             }
 

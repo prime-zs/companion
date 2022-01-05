@@ -25,7 +25,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import kotlinx.coroutines.delay
 
 
 @Composable
@@ -69,7 +68,7 @@ fun BaseDialog(
                             Icon(
                                 imageVector = it,
                                 contentDescription = "dialog icon",
-                                modifier = Modifier.padding(start = Dp.pNormal)
+                                modifier = Modifier.padding(start = Dp.pMedium)
                             )
                         }
                     },
@@ -84,9 +83,9 @@ fun BaseDialog(
                     Row(
                         modifier = Modifier
                             .padding(
-                                bottom = Dp.pNormal,
-                                end = Dp.pNormal,
-                                start = Dp.pNormal
+                                bottom = Dp.pMedium,
+                                end = Dp.pMedium,
+                                start = Dp.pMedium
                             )
                             .fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceEvenly,
@@ -185,7 +184,7 @@ fun AlertDialog(
         onDismissRequest = { onDismissRequest(false) },
         button2 = "Confirm" to { onDismissRequest(true) },
         button1 = "Dismiss" to { onDismissRequest(false) }) {
-        Frame(modifier = Modifier.padding(horizontal = Dp.pLarge, vertical = Dp.pNormal)) {
+        Frame(modifier = Modifier.padding(horizontal = Dp.pNormal, vertical = Dp.pMedium)) {
             Text(text = message, overflow = TextOverflow.Ellipsis)
         }
     }
@@ -232,8 +231,8 @@ fun TextInputDialog(
             modifier = Modifier
                 .focusRequester(focusRequester = focusRequester)
                 .padding(
-                    vertical = Dp.pLarge2,
-                    horizontal = Dp.pLarge2
+                    vertical = Dp.pLarge,
+                    horizontal = Dp.pLarge
                 )
                 .fillMaxWidth(),
             trailingIcon = {

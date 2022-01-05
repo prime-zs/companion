@@ -15,13 +15,13 @@ private val PaddingExtraLarge = 32.dp
 val Dp.Companion.pSmall get() = com.primex.extra.PaddingSmall
 
 /** A Padding of 8.dp */
-val Dp.Companion.pNormal get() = PaddingMedium
+val Dp.Companion.pMedium get() = PaddingMedium
 
 /** A Padding of 16.dp */
-val Dp.Companion.pLarge get() = com.primex.extra.PaddingLarge
+val Dp.Companion.pNormal get() = com.primex.extra.PaddingLarge
 
 /** A Padding of 32.dp */
-val Dp.Companion.pLarge2 get() = PaddingExtraLarge
+val Dp.Companion.pLarge get() = PaddingExtraLarge
 
 
 const val AnimDurationShort = 250
